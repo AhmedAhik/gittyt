@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="cid-rn8qxE8T88 mbr-fullscreen mbr-parallax-background" id="header2-3">
+    <div class="container align-center">
+        <div class="row justify-content-md-center">
+            <div class="mbr-white col-md-10">
+
+                <h3 class="mbr-section-subtitle align-center mbr-light pb-3 mbr-fonts-style display-2">
+                    Красивые мобильные сайты
+                </h3>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+  <div class="section section1">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-12">
+                  <h1 class="text-center">
+                      Новые поступления
+                  </h1>
+              </div>
+                          {% for product_image in products_images %}
+                              {% include 'landing/product_item.html' %}
+                          {% endfor %}
+          </div>
+      </div>
+  </div>
+</section>
+{% include 'footer.html' %}
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<section class="mbr-section form1 cid-rn8uHYzSGy" id="form1-e">
+
+    <div class="container">
+        <div class="row">
+            {% if products_in_basket %}
+                <div class="col-lg-12 col-lg-offset-2">
+                    <h3 class="text-center">Товары в корзине</h3><br>
+                            {{ request.session.basket.products }}
+
+                    <form class="form-horizontal" method="post">{% csrf_token %}
+                            <div class="form-group" align="center">
+                                <div class="col-lg-4" align="left">
+                                    <label>Имя</label>
+                                    <input type="text" name="{{ form.name.html_name }}" class="form-control" required=""
+                                        value="{{ request.POST.name }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group" align="center">
+                                <div class="col-lg-4"align="left" >
+                                     <label>Телефон</label>
+                                    <input type="phone" name="{{ form.phone.html_name }}" class="form-control" required=""
+                                        value="{{ request.POST.phone }}">
+                                </div>
+                            </div>
+
+                             <br>
+
+
+                        <table class="table text-center">
+                            <thead>
+                                <tr>
+                                    <th>Название товара</th>
+                                    <th>Количество</th>
+                                    <th>Цена за еденицу</th>
+                                    <th>Общая цена</th>
+                                    <th>Удалить с корзины</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product_in_basket in products_in_basket %}
+                                    <tr>
+                                        <td>
+                                             {{ product_in_basket.product.name }}
+                                        </td>
+                                        <td>
+                                             <input value="{{ product_in_basket.nmb }}" type="number"
+                                                    class="product-in-basket-nmb" name="product_in_basket_{{ product_in_basket.id }}">
+                                        </td>
+                                        <td>
+                                            <span class="product-price">
+                                                {{ product_in_basket.price_per_item}} тг.
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="total-product-in-basket-amount">
+                                                {{ product_in_basket.total_price }} тг.
+                                            </span>
+                                        </td>
+
+
+                                                <td>
+                                                  <div class="basket-container">
+
+                                                        <button class="delete-item" href="" data-product_id="{{ product_in_basket.id }}">Удалить</button>
+                                                    
+                                                  </div>
+                                                </td>
+
+
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <div class="text-right">
+                            <p><b>Сумма заказа: </b> <span id="total_order_amount"></span> тг.</p>
+                        </div>
+
+                        <hr>
+                        <span class="input-group-btn">
+                              <button href="" type="submit" class="btn btn-primary btn-form display-4">Заказать</button>
+                          </span>
+
+                    </form>
+                </div>
+
+             {% else %}
+                <h3 class="text-center">В Вашей корзине нет товаров</h3>
+                <br><br><br><br><br><br>
+            {% endif %}
+        </div>
+    </div>
+</section>
+    {% include 'footer.html' %}
+{% endblock %}

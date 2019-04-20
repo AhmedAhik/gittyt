@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<section class="testimonials1 cid-rn8sx7Tkb9" id="testimonials1-a">
+  <div class="section section1">
+      <div class="container">
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <th>Название товара</th>
+                    <th>Количество</th>
+                    <th>Цена за еденицу</th>
+                    <th>Общая цена</th>
+                    <th>Удалить с корзины</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product_in_basket in products_in_basket %}
+                    <tr>
+                        <td>
+                            {{ product_in_basket.product.name }}
+                        </td>
+                        <td>
+                            {{ product_in_basket.nmb }}
+                        </td>
+                        <td>
+                            {{ product_in_basket.price_per_item}} тг.
+                        </td>
+                        <td>
+                            {{ product_in_basket.total_price }} тг.
+                        </td>
+                        <td>
+
+                            <ul class="">
+                              <li>
+                                <button class="delete-item" href="" data-product_id="{{ product_in_basket.id }}">Удалить</button>
+                              </li>
+                            </ul>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+	    </div>
+	</div><br><br><br><br><br>
+</section>
+
+{% include 'footer.html' %}
+{% endblock %}
+
+
+
+<div class="basket-container">
+ <a href="">Корзина <span id="basket_total_amount"></span><span id="basket_total_nmb">
+     {% if products_total_nmb %}
+         ({{ products_total_nmb }})
+     {% else %}
+         (0)
+     {% endif %}
+ </span></a>
+ <div class="basket-items hidden">
+     <ul class="">
+         {% for product_in_basket in products_in_basket %}
+             <li>
+                 {{ product_in_basket.product.name }} {{ product_in_basket.nmb }} шт.
+                 по {{ product_in_basket.price_per_item }} тг.
+                 <a class="delete-item" href="" data-product_id="{{ product_in_basket.id }}">x</a>
+             </li>
+         {% endfor %}
+         <li>
+             <a href="{% url 'checkout'  %}">
+                 Оформить заказ
+             </a>
+         </li>
+     </ul>
+ </div>
+</div>
